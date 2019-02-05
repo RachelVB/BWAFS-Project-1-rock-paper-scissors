@@ -28,7 +28,8 @@ const move1Value = 11;
 const move2Value = 33;
 const move3Value = 55;
 
-function setPlayerMoves (player, moveOneType, moveOneValue, moveTwoType, moveTwoValue, moveThreeType, moveThreeValue) {
+const setPlayerMoves = (player, moveOneType, moveOneValue, moveTwoType, moveTwoValue, moveThreeType, moveThreeValue) => {
+
   
   if (!moveOneType || !moveTwoType || !moveThreeType || !moveOneValue || !moveTwoValue || !moveThreeValue) {
     return;
@@ -89,6 +90,77 @@ const validValues = (value1, value2, value3) =>
   /* From this point, we are now passing all of our 'setPlayerMoves' in our test. 
    */
 
-function getRoundWinner() {
-  
-}
+const getRoundWinner = round => {
+
+  let playerOneType;
+  let playerOneValue;
+  let playerTwoType;
+  let playerTwoValue;
+
+
+  /* This switch statement below assigns whos against who in each round. Each player must have a type and a 
+  value for each round. */
+  switch (round) {
+    case 1:
+    playerOneType = playerOneMoveOneType;
+    playerOneValue = playerOneMoveOneValue;
+    playerTwoType = playerTwoMoveOneType;
+    playerTwoValue = playerTwoMoveOneValue;
+    break;
+
+    case 2:
+    playerOneType = playerOneMoveTwoType;
+    playerOneValue = playerOneMoveTwoValue;
+    playerTwoType = playerTwoMoveTwoType;
+    playerTwoValue = playerTwoMoveTwoValue;
+    break;
+
+    case 3:
+    playerOneType = playerOneMoveThreeType;
+    playerOneValue = playerOneMoveThreeValue;
+    playerTwoType = playerTwoMoveThreeType;
+    playerTwoValue = playerTwoMoveThreeValue;
+    break;
+
+    // This default value will return  null for an invalid 'round' number.
+    default:
+    return null;
+  }
+  /* We havent written this function yet, for this statement to return. We will not do this below. */
+  return evaluateMove(playerOneType, playerOneValue, playerTwoType, playerTwoValue);
+    
+};
+
+const evaluateMove = (playerOneType, playerOneValue, playerTwoType, playerTwoValue) => {
+
+  debugger;
+
+/* The if statement below checks to see weather or not there is an input for any of these values */
+  if (!playerOneType || !playerOneValue || !playerTwoType || !playerTwoValue) {
+    return null;
+  }
+
+  /* If the types are the same.*/ 
+  if (playerOneType === playerTwoType) {
+    if (playerOneValue === playerTwoValue) {
+      return tie;
+    }
+
+    /* And winner is based on the higher values */
+    return playerOneValue > playerTwoValue ? playerOne : playerTwo;
+  }
+
+  /* When types are different, the usual RPS rules apply.
+  Think how you will use the conditional statement. Here we could use the ternary operator. */
+  switch(playerOneType) {
+    case move1Type:
+    return playerTwoType === move3Type ? playerOne : playerTwo;
+
+    case move2Type:
+    return playerTwoType === move1Type ? playerOne : playerTwo;
+
+    case move3Type:
+    return playerTwoType === move2Type ? playerOne : playerTwo;
+  }
+
+};
