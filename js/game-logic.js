@@ -18,7 +18,7 @@ let playerTwoMoveThreeValue;
 
 const playerOne = 'Player One';
 const playerTwo = 'Player Two';
-const tie = 'tie'
+const tie = 'Tie'
 
 const move1Type = 'rock';
 const move2Type = 'paper';
@@ -133,13 +133,14 @@ const getRoundWinner = round => {
 
 const evaluateMove = (playerOneType, playerOneValue, playerTwoType, playerTwoValue) => {
 
-  debugger;
-
 /* The if statement below checks to see weather or not there is an input for any of these values */
   if (!playerOneType || !playerOneValue || !playerTwoType || !playerTwoValue) {
     return null;
   }
 
+
+  /* TODO: SOMETHING IS WRONG WITH THIS CODE BELOW. I'VE SUBMITTED A HELP TICKET TO THE SUPPORT TEAM 
+  RESOLVED: The issue was I needed a capital 'T' when the global variable is declared. */
   /* If the types are the same.*/ 
   if (playerOneType === playerTwoType) {
     if (playerOneValue === playerTwoValue) {
@@ -164,3 +165,72 @@ const evaluateMove = (playerOneType, playerOneValue, playerTwoType, playerTwoVal
   }
 
 };
+
+// Global variables. 
+let player1Wins;
+let player2Wins;
+
+const allGlobalsDefined = () =>
+  playerOneMoveOneType &&
+  playerOneMoveTwoType &&
+  playerOneMoveThreeType &&
+  playerOneMoveOneValue &&
+  playerOneMoveTwoValue &&
+  playerOneMoveThreeValue &&
+  playerTwoMoveOneType &&
+  playerTwoMoveTwoType &&
+  playerTwoMoveThreeType &&
+  playerTwoMoveOneValue &&
+  playerTwoMoveTwoValue &&
+  playerTwoMoveThreeValue;
+
+const getGameWinner = () => {
+
+  if (!allGlobalsDefined()) {
+    return null;
+  }
+
+  /* We need to show how to evaluate round winners. */
+
+   let round1Winner = getRoundWinner(1);
+   let round2Winner = getRoundWinner(2);
+   let round3Winner = getRoundWinner(3);
+
+
+  player1Wins = 0;
+  player2Wins = 0;
+
+  /* Thes incrementScores tells to this function to increment the round winners. This incrementScores 
+  function will be called later, but we need to call it now so that it can work in the getGameWinner function. */
+  incrementScores(round1Winner);
+  incrementScores(round2Winner);
+  incrementScores(round3Winner);
+
+  if (player1Wins === player2Wins) {
+    return 'Tie'
+  }
+  return player1Wins > player2Wins ? playerOne : playerTwo;
+
+  };
+
+  const incrementScores = winner => {
+    switch(winner) {
+      case playerOne:
+      player1Wins += 1;
+      break;
+
+      case playerTwo:
+      player2Wins += 1;
+      break;
+    }
+    /* This incrementScore function still does not return null if any of the values are undefined. 
+    We will include this in a function above called allGlobalsDefined. */
+  };
+
+  const setComputerMoves = () => {
+
+    const validMoves = ['rock', 'paper', 'scissors'];
+    
+    
+
+  }
